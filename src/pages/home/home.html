@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Chatbot</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only color="royal">
+        <ion-icon name="ionitron"></ion-icon>
+      </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list #messagebox id="scrollbar-custom">
+        <ion-item *ngFor="let msg of conversation | async">
+            <ion-avatar item-start *ngIf="msg.name == 'Bot'">
+                <img [src]="msg.imageUrl">
+            </ion-avatar>
+            <ion-avatar item-end *ngIf="msg.name == 'You'">
+                <img [src]="msg.imageUrl">
+            </ion-avatar>
+            <div [ngClass]="{'you': msg.name == 'You' }">
+                <h3>{{msg.name}}</h3>
+                <p>{{msg.text}}</p>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>
+
+<ion-footer>
+    <form #messageForm="ngForm" novalidate>
+        <ion-toolbar>
+            <ion-item>
+                <ion-textarea type="text" placeholder="Type Your Message here" [(ngModel)]="message" name="message" required></ion-textarea>
+            </ion-item>
+            <ion-buttons end>
+                <button ion-button icon-right color="royal" [disabled]="!messageForm.form.valid" (click)="sendMessage()">
+        <ion-icon name="send"></ion-icon>
+      </button>
+            </ion-buttons>
+        </ion-toolbar>
+    </form>
+</ion-footer>
